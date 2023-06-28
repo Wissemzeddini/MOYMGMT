@@ -3,21 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/icons8-money-96.png" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='login.css') }}">
+    <script src="{{ url_for('static',filename='script.js') }}"></script>
     <title>Login</title>
 </head>
 <body>
     <div class="card">
-        <h4 class="title-lv2">Welcome To MOYMGMT</h4>
-        <fieldset>
-            <legend>Username</legend>
-            <input type="text" name="username" placeholder="Username" class="zone">
-        </fieldset>
-        <fieldset>
-            <legend>Password</legend>
-            <input type="password" name="password" placeholder="Password" class="zone">
-        </fieldset>
-        <input type="submit" value="Login" class="btn-login">
+        <h4 class="title-lv2">MOYMGMT</h4>
+        <center>
+            <img src="{{ url_for('static',filename='icons8-money-96.png') }}" class="logo">
+        </center>
+        <form action="" method="POST">
+            <div class="row">
+                <fieldset id="Username">
+                    <input type="email" name="username" id="user" placeholder="Username" class="zone" onclick="legand('Username')">
+                </fieldset>
+            </div>
+            <div class="row">
+                <fieldset id="Password">
+                    <input type="password" name="password" id="pass" placeholder="Password" class="zone" onclick="legand('Password')" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$">
+                </fieldset>
+            </div>
+            <input type="submit" value="Login" class="btn-login">
+        </form>
+        <div class="bot-sec">
+            <a href="#">I don't Have Account? <span>Sign Up</span></a>
+        </div>
+        <div class="bot-sec">
+            <a href="#">I Forget The Password?</a>
+        </div>
     </div>
 </body>
 </html>

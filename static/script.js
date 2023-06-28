@@ -24,3 +24,19 @@ modeSwitch.addEventListener("click" , () =>{
         
     }
 });
+
+function legand(id){
+    elm = document.getElementById(id);
+    var hasLegend = elm.querySelector("legend") !== null;
+    if (! hasLegend) {
+        elm.innerHTML += "<legend>"+id+"</legend>";
+        if (id=="Username"){
+            document.getElementById("user").placeholder = "";
+            document.getElementById("user").focus();
+        }
+        else{
+            document.getElementById("pass").placeholder = "";
+            document.getElementById("pass").focus();
+        }
+    }   
+}
