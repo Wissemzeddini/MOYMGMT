@@ -40,3 +40,17 @@ function legand(id){
         }
     }   
 }
+function showPass(){
+    const icon = document.getElementById("showPass");
+    const pass = document.getElementById("pass");
+    const label = document.getElementById("labelpass");
+    if(pass.type =="password"){
+        pass.type = "text";
+        icon.className = "fa-solid fa-circle-check";
+        label.innerHTML = "Hide Password"
+    }else{
+        pass.type = "password";
+        icon.className = "fa-regular fa-circle-check";
+        label.innerHTML = "Show Password"
+    }
+}

@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="../static/icons8-money-96.png" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static',filename='login.css') }}">
     <script src="{{ url_for('static',filename='script.js') }}"></script>
+    <script src="https://kit.fontawesome.com/3bb8050783.js" crossorigin="anonymous"></script>
     <title>Login</title>
 </head>
 <body>
@@ -17,6 +18,10 @@
         <form action="/authentification" method="POST">
             <input type="text" name="username" id="user" placeholder="Username" class="field" onclick="legand('Username')">
             <input type="password" name="password" id="pass" placeholder="Password" class="field" onclick="legand('Password')" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$">
+            <div style="text-align: left;margin-left: 18px;margin-bottom: 15px;">
+                <i class="fa-regular fa-circle-check" id="showPass"></i>
+                <label for="showPass" onclick="showPass()" id="labelpass">Show Password</label>
+            </div>
             <input type="submit" value="Login" class="btn-login">
         </form>
         <div class="bot-sec">
