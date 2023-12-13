@@ -12,4 +12,4 @@ def buildTable(strQuery):
 if __name__=="__main__":
     print("build table User...")
     strQuery = """CREATE TABLE users (id INTEGER PRIMARY KEY,username TEXT NOT NULL,password TEXT,lastlogin date)"""
-    buildTable(strQuery)
+    #buildTable(strQuery)

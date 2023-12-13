@@ -14,21 +14,13 @@
         <center>
             <img src="{{ url_for('static',filename='icons8-money-96.png') }}" class="logo">
         </center>
-        <form action="" method="POST">
-            <div class="row">
-                <fieldset id="Username">
-                    <input type="email" name="username" id="user" placeholder="Username" class="zone" onclick="legand('Username')">
-                </fieldset>
-            </div>
-            <div class="row">
-                <fieldset id="Password">
-                    <input type="password" name="password" id="pass" placeholder="Password" class="zone" onclick="legand('Password')" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$">
-                </fieldset>
-            </div>
+        <form action="/authentification" method="POST">
+            <input type="text" name="username" id="user" placeholder="Username" class="field" onclick="legand('Username')">
+            <input type="password" name="password" id="pass" placeholder="Password" class="field" onclick="legand('Password')" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$">
             <input type="submit" value="Login" class="btn-login">
         </form>
         <div class="bot-sec">
-            <a href="#">I don't Have Account? <span>Sign Up</span></a>
+            <a href="/register">I don't Have Account? <span>Sign Up</span></a>
         </div>
         <div class="bot-sec">
             <a href="#">I Forget The Password?</a>

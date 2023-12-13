@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/icons8-money-96.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static',filename='login.css') }}">
+    <script src="https://kit.fontawesome.com/3bb8050783.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='js/auth.js') }}"></script>
+    <title>Register</title>
+</head>
+<body>
+    <div class="card">
+        <h4 class="title-lv2">MOYMGMT</h4>
+        <center>
+            <img src="{{ url_for('static',filename='icons8-money-96.png') }}" class="logo">
+        </center>
+        <form name ="register" action="/user/new" onsubmit="return confirm_password()" method="POST">
+            <input type="text" name="username" placeholder="Username" class="field" required>
+            <input type="email" name="email" placeholder="E-mail" class="field" required>
+            <input type="file" name="file" id="file" placeholder="select picture" class="field-file" onchange="updateFileName()" accept="image/*">
+            <label for="file" id="fileLabel"><i class="fa-solid fa-upload"></i> Choose a picture</label>
+            <input type="password" name="password" id="password" placeholder="Password" class="field" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <span class="toggle-password" onclick="togglePassword()"><i id="eye" class="fa-solid fa-eye"></i></span>
+            <input type="password" name="confirm_password" id="pass_confirm" placeholder="Confirm Password" class="field" required>
+            <button type="submit" class="btn-login">Register</button>
+            {% if error %}
+            <div class="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
