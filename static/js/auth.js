@@ -38,3 +38,20 @@ function updateFileName() {
       fileLabel.textContent = 'Selected file: ' + fileInput.files[0].name;
     }
   }
+  function showPassRegister(){
+    const icon = document.getElementById("showPass");
+    const pass = document.getElementById("password");
+    const confirm = document.getElementById("pass_confirm");
+    const label = document.getElementById("labelpass");
+    if(pass.type =="password"){
+        pass.type = "text";
+        confirm.type = "text";
+        icon.className = "fa-solid fa-circle-check";
+        label.innerHTML = "Hide Password"
+    }else{
+        pass.type = "password";
+        confirm.type = "password";
+        icon.className = "fa-regular fa-circle-check";
+        label.innerHTML = "Show Password"
+    }
+}

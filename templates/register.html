@@ -15,14 +15,17 @@
         <center>
             <img src="{{ url_for('static',filename='icons8-money-96.png') }}" class="logo">
         </center>
-        <form name ="register" action="/user/new" onsubmit="return confirm_password()" method="POST">
+        <form name ="register" action="/user/new" onsubmit="return confirm_password()" method="POST" enctype="multipart/form-data">
             <input type="text" name="username" placeholder="Username" class="field" required>
             <input type="email" name="email" placeholder="E-mail" class="field" required>
             <input type="file" name="file" id="file" placeholder="select picture" class="field-file" onchange="updateFileName()" accept="image/*">
             <label for="file" id="fileLabel"><i class="fa-solid fa-upload"></i> Choose a picture</label>
             <input type="password" name="password" id="password" placeholder="Password" class="field" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-            <span class="toggle-password" onclick="togglePassword()"><i id="eye" class="fa-solid fa-eye"></i></span>
             <input type="password" name="confirm_password" id="pass_confirm" placeholder="Confirm Password" class="field" required>
+            <div style="text-align: left;margin-left: 18px;margin-bottom: 15px;">
+                <i class="fa-regular fa-circle-check" id="showPass"></i>
+                <label for="showPass" onclick="showPassRegister()" id="labelpass">Show Password</label>
+            </div>
             <button type="submit" class="btn-login">Register</button>
             {% if error %}
             <div class="alert">

@@ -1,13 +1,26 @@
 from flask import Flask, url_for,  redirect, render_template, request,session
+import os
 from Models.user import User
+import hashlib
+import time
 
 app = Flask(__name__)
 app.secret_key = 'moymgmt(:Gh/.>.*/{)]'
+# Set the upload folder
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def check_session():
     if 'username' in session:
         return True
     return False
+
+#generate a unique name based on hashed timestamp
+def generate_unique_filename(filename):
+    _, file_extension = os.path.splitext(filename)
+    timestamp = str(time.time())
+    hash_object = hashlib.md5(timestamp.encode() + filename.encode())
+    return hash_object.hexdigest() + file_extension
 
 @app.route("/")
 def index():
@@ -46,14 +59,19 @@ def addUser():
     try:
         username = request.form.get('username')
         email = request.form.get('email')
-        file = request.form.get('file')
+        file = request.files['file']
         password = request.form.get('password')
         confirm = request.form.get('confirm_password')
         if( not password == confirm):
             return render_template("register.html",error="The confirm password is different.")
     except Exception as e:
         return render_template("register.html",error=str(e))
-    user = User(username,email,file,password)
+    if file:
+        unique_filename = generate_unique_filename(file.filename)
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        file.save(filename)
+        print('File uploaded successfully.')
+    user = User(username,email,unique_filename,password)
     if user.register():
         return redirect('/login')
     return render_template("register.html",error="User already existe!")
