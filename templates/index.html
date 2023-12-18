@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="../static/icons8-money-96.png" type="image/x-icon">
     
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
     
     <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
@@ -20,12 +20,12 @@
         <header>
             <div class="image-text">
                 <span class="image">
-                    <img src="../static/icons8-money-96.png" alt="">
+                    <img src="{{ url_for('uploaded_file',filename='d3f5a878d87976c8da223eabbed9eebd.png') }}" alt="">
                 </span>
 
                 <div class="text logo-text">
                     <span class="name">MOYMGMT</span>
-                    <span class="profession">Control Your Moneny</span>
+                    <span class="profession">{{session['username']}}</span>
                 </div>
             </div>
 
@@ -81,7 +81,7 @@
 
             <div class="bottom-content">
                 <li class="">
-                    <a href="#">
+                    <a href="/logout">
                         <i class='bx bx-log-out icon' ></i>
                         <span class="text nav-text">Logout</span>
                     </a>
@@ -125,8 +125,16 @@
             </div>
         </div>
     </section>
-    <div class="add"><i class='bx bxs-message-square-add'></i></div>
+    <div class="add" id="#modal"><i class='bx bxs-message-square-add'></i></div>
+    <!--Start Popup-->
+    <div class="modal" id="modal">
+        <div class="modal-back"></div>
+        <div class="modal-container">
+          Modale ici<br />
+          <a href="#" id="modal-close">[fermer]</a>
+        </div>
+    </div>
+     <!--End Popup-->
     <script src="{{ url_for('static',filename='script.js') }}"></script>
-
 </body>
 </html>

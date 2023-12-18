@@ -30,6 +30,11 @@
         <div class="bot-sec">
             <a href="#">I Forget The Password?</a>
         </div>
+        {% if error %}
+            <div class="alert">
+                {{ error }}
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Flask, url_for,  redirect, render_template, request,session
+from flask import Flask, url_for,  redirect, render_template, request,session, send_from_directory
 import os
 from Models.user import User
 import hashlib
@@ -26,7 +26,7 @@ def generate_unique_filename(filename):
 def index():
     if check_session():
         print(session['username'])
-        return render_template("index.html")
+        return render_template("index.html",session=session)
     return redirect('/login')
 
 @app.route("/login")
@@ -48,7 +48,7 @@ def auth():
         session["email"] = email
         session["picture"] = picture
         return redirect('/')
-    return redirect('/login')
+    return render_template("login.html",error="Username or Password incorrect.")
 
 @app.route("/register")
 def register():
@@ -85,6 +85,10 @@ def logout():
     session.pop('picture', None)
     return redirect('login')
     
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 if __name__=="__main__":
     app.run(debug=True)
