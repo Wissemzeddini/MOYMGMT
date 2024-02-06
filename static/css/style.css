@@ -425,3 +425,21 @@ body.dark .home .text{
     opacity: 1;
     pointer-events: all;
   }
+  .pop-fields{
+    width: 40%;
+    height: 40px;
+    border: 1px solid var(--text-color);
+    border-radius: 8px;
+    background: none;
+    margin-bottom: 10px;
+    justify-content: space-between;
+  }
+  .pop-btn{
+    width: 90%;
+    height: 40px;
+    border: none;
+    background-color: var(--primary-color);
+    font-size: 16px;
+    border-radius: 8px;
+    color: var(--text-color);
+  }

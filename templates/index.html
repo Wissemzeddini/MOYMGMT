@@ -133,12 +133,67 @@
           <button data-close-button class="close-button"><i class='bx bx-x-circle'></i></button>
         </div>
         <div class="modal-body">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quod alias ut illo doloremque eum ipsum obcaecati distinctio debitis reiciendis quae quia soluta totam doloribus quos nesciunt necessitatibus, consectetur quisquam accusamus ex, dolorum, dicta vel? Nostrum voluptatem totam, molestiae rem at ad autem dolor ex aperiam. Amet assumenda eos architecto, dolor placeat deserunt voluptatibus tenetur sint officiis perferendis atque! Voluptatem maxime eius eum dolorem dolor exercitationem quis iusto totam! Repudiandae nobis nesciunt sequi iure! Eligendi, eius libero. Ex, repellat sapiente!
+            <form action="">
+                <select id="category" onchange="populateSubcategories()" class="pop-fields">
+                <!-- Categories will be populated here -->
+                </select>
+                <select id="subcategory" class="pop-fields">
+                <!-- Subcategories will be populated here -->
+                </select>
+                <input type="text" name="itemName" id="items_name" placeholder="Item Name" class="pop-fields">
+                <input type="text" name="itemPrice" id="items_price" placeholder="Item Price" class="pop-fields">
+                <input type="text" name="itemQuantity" id="items_quantity" placeholder="Item Quantity" class="pop-fields">
+                <input type="text" name="itemRegion" id="items_region" placeholder="Item Region" class="pop-fields">
+                <input type="submit" value="Save" class="pop-btn">
+            </form>
         </div>
       </div>
       <div id="overlay"></div>
      <!--End Popup-->
     <script src="{{ url_for('static',filename='script.js') }}"></script>
     <script src="{{ url_for('static',filename='js/popup.js') }}"></script>
+    <script>
+        const jsonData =  JSON.parse(decodeURIComponent('{{ jsonObj | tojson | safe | trim("()") }}'));
+        console.log(jsonData);
+      // Function to populate the category dropdown
+      function populateCategories() {
+        var categoryDropdown = document.getElementById("category");
+  
+        jsonData.categories.forEach(function(category) {
+          var option = document.createElement("option");
+          option.value = category.name;
+          option.text = category.name;
+          categoryDropdown.add(option);
+        });
+  
+        // Populate subcategories for the initial category
+        populateSubcategories();
+      }
+  
+      // Function to populate the subcategory dropdown based on the selected category
+      function populateSubcategories() {
+        var categoryDropdown = document.getElementById("category");
+        var subcategoryDropdown = document.getElementById("subcategory");
+  
+        // Clear existing subcategories
+        subcategoryDropdown.innerHTML = "";
+  
+        // Find the selected category
+        var selectedCategory = jsonData.categories.find(function(category) {
+          return category.name === categoryDropdown.value;
+        });
+  
+        // Populate subcategories for the selected category
+        selectedCategory.subcategories.forEach(function(subcategory) {
+          var option = document.createElement("option");
+          option.value = subcategory;
+          option.text = subcategory;
+          subcategoryDropdown.add(option);
+        });
+      }
+  
+      // Populate categories on page load
+      populateCategories();
+    </script>
 </body>
 </html>

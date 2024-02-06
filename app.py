@@ -3,6 +3,7 @@ import os
 from Models.user import User
 import hashlib
 import time
+import json
 
 app = Flask(__name__)
 app.secret_key = 'moymgmt(:Gh/.>.*/{)]'
@@ -15,6 +16,11 @@ def check_session():
         return True
     return False
 
+def loadJsonFile(filename="categories.json"):
+    with open(filename, 'r') as file:
+        data = json.load(file)
+    return data
+
 #generate a unique name based on hashed timestamp
 def generate_unique_filename(filename):
     _, file_extension = os.path.splitext(filename)
@@ -26,7 +32,7 @@ def generate_unique_filename(filename):
 def index():
     if check_session():
         print(session['username'])
-        return render_template("index.html",session=session)
+        return render_template("index.html",session=session,jsonObj=loadJsonFile())
     return redirect('/login')
 
 @app.route("/login")

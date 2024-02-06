@@ -1,0 +1,17 @@
+{
+    "categories": [
+      {
+        "name": "It-Tech",
+        "subcategories": ["Smartphone", "Laptop", "PC's", "Airbuds","Mouse","Keyboard","Mintor","Other Techs"]
+      },
+      {
+        "name": "Foods",
+        "subcategories": ["Kaskrout", "Coffee", "Juce","Lap-lepi","Melaoui","Gazouz","Other Foods"]
+      },
+      {
+        "name":"Telecomication",
+        "subcategories":["Ticket Ooredoo","Ticket Telecom"]
+      }
+    ]
+      
+  }
