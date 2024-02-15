@@ -133,11 +133,11 @@
           <button data-close-button class="close-button"><i class='bx bx-x-circle'></i></button>
         </div>
         <div class="modal-body">
-            <form action="">
+            <form action="/saveItem" method="POST">
                 <select id="category" onchange="populateSubcategories()" class="pop-fields">
                 <!-- Categories will be populated here -->
                 </select>
-                <select id="subcategory" class="pop-fields">
+                <select id="subcategory" class="pop-fields" name="subcategory">
                 <!-- Subcategories will be populated here -->
                 </select>
                 <input type="text" name="itemName" id="items_name" placeholder="Item Name" class="pop-fields">

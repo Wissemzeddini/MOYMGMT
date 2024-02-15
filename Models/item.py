@@ -44,6 +44,7 @@ class Item(Ticket):
     
     def __init__(self,name,price,quantity,region,currency,user):
         super().__init__(user)
+        super().createTicket()
         self.name = name
         self.price = price
         self.quantity = quantity
@@ -56,11 +57,30 @@ class Item(Ticket):
         if super().checkTicketIsExiste():
             query = "insert into `items`(name,price,quantity,createdAt,ticket,region,currency) values(?,?,?,?,?,?,?)"
             data = (self.name,self.price,self.quantity,self.createdAt,self.ticket,self.region,self.currency)
+            if self.checkItemIfExsist():
+                self.updateItemPrice()
+                print("Update done successfuly")
+            else:
+                try:
+                    setData(query,data)
+                    print("New Item has been added successfuly")
+                except Exception as e:
+                    print("Error happing during creating new items", str(e))
     
     def checkItemIfExsist(self):
-        query = "select id from `items` where name=? and price=? and ticket=? limit 1;"
-        data = (self.code,)
+        query = "select * from `items` where name=? and price=? and ticket=? limit 1;"
+        data = (self.name,self.price,self.ticket)
         rows = fetchData(query,data)
-
-if __name__=="__main__":
-   pass
+        if len(rows):
+            return True
+        return False
+    
+    def updateItemPrice(self):
+        query="update `items` set price=price+?, quantity=quantity+? where name=? and ticket=? and price=?;"
+        data = (self.price,self.quantity,self.name,self.ticket,self.price)
+        try:
+            setData(query,data)
+            return True
+        except Exception as e:
+            print(f"Error when update the item [{self.name}]: ",str(e))
+        return False

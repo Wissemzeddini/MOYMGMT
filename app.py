@@ -95,6 +95,14 @@ def logout():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+@app.route('/saveItem', methods=['GET', 'POST'])
+def save_expense():
+    category =  request.form.get('subcategory')
+    name = request.form.get('items_name')
+    price = request.form.get('items_price')
+    quantity = request.form.get('items_quantity')
+    region = request.form.get('items_region')
+
 
 if __name__=="__main__":
     app.run(debug=True)

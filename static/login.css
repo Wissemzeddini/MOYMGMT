@@ -18,9 +18,15 @@
 }
 
 body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: 'Poppins', sans-serif;
-    background-image: url('images/money.jpg');
-    background-size: cover;
+    background: url('images/money.jpg') center/cover no-repeat;
+    backdrop-filter: blur(3px);
 }
 .card{
     position: absolute;
