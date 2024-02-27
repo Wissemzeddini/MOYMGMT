@@ -15,3 +15,11 @@ def fetchData(strQuery,data):
     rows = cursor.fetchall()
     conn.close()
     return rows
+
+def fetchDataWithoutParams(strQuery):
+    conn = sqlite3.connect('moymgmt_v2.db')
+    cursor = conn.cursor()
+    cursor.execute(strQuery)
+    rows = cursor.fetchall()
+    conn.close()
+    return rows

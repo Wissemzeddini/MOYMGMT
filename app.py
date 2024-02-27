@@ -1,9 +1,12 @@
 from flask import Flask, url_for,  redirect, render_template, request,session, send_from_directory
 import os
 from Models.user import User
+from Models.dbmanager import fetchDataWithoutParams
+from Models.item import Item
 import hashlib
 import time
 import json
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'moymgmt(:Gh/.>.*/{)]'
@@ -21,6 +24,9 @@ def loadJsonFile(filename="categories.json"):
         data = json.load(file)
     return data
 
+def get_regions():
+    rows = fetchDataWithoutParams("select * from regions;")
+    return rows
 #generate a unique name based on hashed timestamp
 def generate_unique_filename(filename):
     _, file_extension = os.path.splitext(filename)
@@ -28,11 +34,22 @@ def generate_unique_filename(filename):
     hash_object = hashlib.md5(timestamp.encode() + filename.encode())
     return hash_object.hexdigest() + file_extension
 
+def getDefaultCurrency():
+    rows = fetchDataWithoutParams("select * from currencies limit 1;")
+    return rows[0][0]
+
+def get_stats():
+    daily = fetchDataWithoutParams("SELECT SUM(current_price) as daily FROM items WHERE SUBSTR(createdAt, 1, 10) = DATE('now');")
+    weekly = fetchDataWithoutParams("SELECT SUM(current_price) as weekly_expense FROM items WHERE strftime('%Y-%m-%W', createdAt) = strftime('%Y-%m-%W', 'now', 'localtime');")
+    monthly = fetchDataWithoutParams("SELECT SUM(current_price) as monthly_expense FROM items WHERE strftime('%Y-%m', createdAt) = strftime('%Y-%m', 'now', 'localtime');")
+    total = fetchDataWithoutParams("SELECT SUM(current_price) as total FROM items;")
+    return [daily[0][0], weekly[0][0], monthly[0][0], total[0][0]]
+
 @app.route("/")
 def index():
     if check_session():
         print(session['username'])
-        return render_template("index.html",session=session,jsonObj=loadJsonFile())
+        return render_template("index.html",session=session,jsonObj=loadJsonFile(),regions=get_regions(), stats=get_stats())
     return redirect('/login')
 
 @app.route("/login")
@@ -97,11 +114,17 @@ def uploaded_file(filename):
 
 @app.route('/saveItem', methods=['GET', 'POST'])
 def save_expense():
-    category =  request.form.get('subcategory')
-    name = request.form.get('items_name')
-    price = request.form.get('items_price')
-    quantity = request.form.get('items_quantity')
-    region = request.form.get('items_region')
+    category = request.form.get('category')
+    subcategory =  request.form.get('subcategory')
+    name = request.form.get('itemName')
+    price = request.form.get('itemPrice')
+    quantity = request.form.get('itemQuantity')
+    region = request.form.get('itemRegion')
+    currency = getDefaultCurrency()
+    print(category,subcategory,name,price,quantity,region,currency,session.get("userId"))
+    itm = Item(category,subcategory,name,price,quantity,region,currency,session.get("userId"))
+    itm.saveItem()
+    return redirect('/')
 
 
 if __name__=="__main__":

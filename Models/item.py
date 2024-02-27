@@ -1,4 +1,4 @@
-from dbmanager import setData,fetchData
+from Models.dbmanager import setData,fetchData
 from datetime import datetime
 
 class Ticket:
@@ -42,9 +42,11 @@ class Ticket:
 
 class Item(Ticket):
     
-    def __init__(self,name,price,quantity,region,currency,user):
+    def __init__(self,category,subcategory,name,price,quantity,region,currency,user):
         super().__init__(user)
         super().createTicket()
+        self.category = category
+        self.subcategory = subcategory
         self.name = name
         self.price = price
         self.quantity = quantity
@@ -52,11 +54,12 @@ class Item(Ticket):
         self.ticket = super().selectTicketID()
         self.region = region
         self.currency = currency
+        self.user = user
     
     def saveItem(self):
         if super().checkTicketIsExiste():
-            query = "insert into `items`(name,price,quantity,createdAt,ticket,region,currency) values(?,?,?,?,?,?,?)"
-            data = (self.name,self.price,self.quantity,self.createdAt,self.ticket,self.region,self.currency)
+            query = "insert into `items`(category,subcategory,name,current_price,original_price,quantity,ticket,region,currency,user,createdAt) values(?,?,?,?,?,?,?,?,?,?,?)"
+            data = (self.category,self.subcategory,self.name,self.price,self.price,self.quantity,self.ticket,self.region,self.currency,self.user,self.createdAt)
             if self.checkItemIfExsist():
                 self.updateItemPrice()
                 print("Update done successfuly")
@@ -68,16 +71,16 @@ class Item(Ticket):
                     print("Error happing during creating new items", str(e))
     
     def checkItemIfExsist(self):
-        query = "select * from `items` where name=? and price=? and ticket=? limit 1;"
-        data = (self.name,self.price,self.ticket)
+        query = "select * from `items` where category=? and subcategory=? and name=? and original_price=? and ticket=? and user=? limit 1;"
+        data = (self.category,self.subcategory,self.name,self.price,self.ticket,self.user)
         rows = fetchData(query,data)
         if len(rows):
             return True
         return False
     
     def updateItemPrice(self):
-        query="update `items` set price=price+?, quantity=quantity+? where name=? and ticket=? and price=?;"
-        data = (self.price,self.quantity,self.name,self.ticket,self.price)
+        query="update `items` set current_price=current_price+?, quantity=quantity+? where category=? and subcategory=? and name=? and ticket=? and user=?;"
+        data = (float(self.price),self.quantity,self.category,self.subcategory,self.name,self.ticket,self.user)
         try:
             setData(query,data)
             return True

@@ -11,6 +11,10 @@
       {
         "name":"Telecomication",
         "subcategories":["Ticket Ooredoo","Ticket Telecom"]
+      },
+      {
+        "name":"Transportations",
+        "subcategories":["Bus","Mini-Bus","Taxi","Others"]
       }
     ]
       
