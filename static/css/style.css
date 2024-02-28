@@ -452,3 +452,19 @@ body.dark .home .text{
     cursor: pointer;
     transition: 2s;
   }
+  .ticket-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    gap: 1px;
+    margin-left: 20px;
+    margin-top: 15px;
+  }
+  .ticket-card{
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    width: 95%;
+    margin-bottom: 5px;
+    color: var(--text-color-light);
+  }

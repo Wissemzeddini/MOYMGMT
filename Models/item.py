@@ -39,6 +39,14 @@ class Ticket:
         if len(rows):
             return rows[0][0]
         raise Exception(f"No such Ticket under this code: {self.code}")
+    
+    def getAllTickets(self):
+        query = "select * from `tickets` where user=?;"
+        data = (self.user,)
+        rows = fetchData(query,data)
+        if len(rows):
+            return rows
+        return ["There is no data to display!"]
 
 class Item(Ticket):
     

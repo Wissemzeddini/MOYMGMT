@@ -1,0 +1,190 @@
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/icons8-money-96.png" type="image/x-icon">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+    <title>{% block title %}MOYMGMT{% endblock %}</title> 
+</head>
+<body>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="{{ url_for('uploaded_file',filename='d3f5a878d87976c8da223eabbed9eebd.png') }}" alt="">
+                </span>
+
+                <div class="text logo-text">
+                    <span class="name">MOYMGMT</span>
+                    <span class="profession">{{session['username']}}</span>
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Search...">
+                </li>
+
+                <ul class="menu-links">
+                    <li class="nav-link {% if url_for(request.endpoint) == '/' %}active{% endif %}">
+                        <a href="/">
+                            <i class='bx bx-home-alt icon'></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link {% if url_for(request.endpoint) == '/tickets' %}active{% endif %}">
+                        <a href="/tickets">
+                            <i class='bx bx-barcode icon' ></i>
+                            <span class="text nav-text">Tickets</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-layer icon'></i>
+                            <span class="text nav-text">Items</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <span class="text nav-text">Analytics</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-cog icon' ></i>
+                            <span class="text nav-text">Settings</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="">
+                    <a href="/logout">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
+        </div>
+
+    </nav>
+
+    <section class="home">
+        {% block body %}{% endblock %}
+    </section>
+    <div class="add" data-modal-target="#modal"><i class='bx bxs-message-square-add'></i></div>
+    <!--Start Popup-->
+    <div class="modal" id="modal">
+        <div class="modal-header">
+          <div class="title">Add New Receipt</div>
+          <button data-close-button class="close-button"><i class='bx bx-x-circle'></i></button>
+        </div>
+        <div class="modal-body">
+            <form action="/saveItem" method="POST">
+                <select id="category" onchange="populateSubcategories()" class="pop-fields" name="category">
+                <!-- Categories will be populated here -->
+                </select>
+                <select id="subcategory" class="pop-fields" name="subcategory">
+                <!-- Subcategories will be populated here -->
+                </select>
+                <input type="text" name="itemName" id="items_name" placeholder="Item Name" class="pop-fields">
+                <input type="text" name="itemPrice" id="items_price" placeholder="Item Price" class="pop-fields">
+                <input type="text" name="itemQuantity" id="items_quantity" placeholder="Item Quantity" class="pop-fields">
+                <select name="itemRegion" id="items_region" class="pop-fields">
+                    {% for region_id, region_name, region_code in regions %}
+                    <option value="{{ region_id }}">{{ region_name }} - {{ region_code }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Save" class="pop-btn">
+                <hr style="margin: 10px;">
+                <div style="padding: 10px;">
+                    <span><b>Currency:</b> TND</span>
+                    <span style="float: right;"><b>Country:</b> Tunisia</span>
+                </div>
+            </form>
+        </div>
+      </div>
+      <div id="overlay"></div>
+     <!--End Popup-->
+    <script src="{{ url_for('static',filename='script.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/popup.js') }}"></script>
+    <script>
+        const jsonData =  JSON.parse(decodeURIComponent('{{ jsonObj | tojson | safe | trim("()") }}'));
+        console.log(jsonData);
+      // Function to populate the category dropdown
+      function populateCategories() {
+        var categoryDropdown = document.getElementById("category");
+  
+        jsonData.categories.forEach(function(category) {
+          var option = document.createElement("option");
+          option.value = category.name;
+          option.text = category.name;
+          categoryDropdown.add(option);
+        });
+  
+        // Populate subcategories for the initial category
+        populateSubcategories();
+      }
+  
+      // Function to populate the subcategory dropdown based on the selected category
+      function populateSubcategories() {
+        var categoryDropdown = document.getElementById("category");
+        var subcategoryDropdown = document.getElementById("subcategory");
+  
+        // Clear existing subcategories
+        subcategoryDropdown.innerHTML = "";
+  
+        // Find the selected category
+        var selectedCategory = jsonData.categories.find(function(category) {
+          return category.name === categoryDropdown.value;
+        });
+  
+        // Populate subcategories for the selected category
+        selectedCategory.subcategories.forEach(function(subcategory) {
+          var option = document.createElement("option");
+          option.value = subcategory;
+          option.text = subcategory;
+          subcategoryDropdown.add(option);
+        });
+      }
+  
+      // Populate categories on page load
+      populateCategories();
+    </script>
+</body>
+</html>

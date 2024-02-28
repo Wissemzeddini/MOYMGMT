@@ -2,7 +2,7 @@ from flask import Flask, url_for,  redirect, render_template, request,session, s
 import os
 from Models.user import User
 from Models.dbmanager import fetchDataWithoutParams
-from Models.item import Item
+from Models.item import Item,Ticket
 import hashlib
 import time
 import json
@@ -126,6 +126,10 @@ def save_expense():
     itm.saveItem()
     return redirect('/')
 
+@app.route('/tickets')
+def tickets():
+    tk = Ticket(session.get("userId"))
+    return render_template("tickets.html",session=session,jsonObj=loadJsonFile(),tickets=tk.getAllTickets())
 
 if __name__=="__main__":
     app.run(debug=True)
