@@ -7,8 +7,9 @@
 <div class="ticket-container">
     {% for ticket in tickets %}
     <div class="ticket-card">
-        <p>{{ ticket[3] }}</p>
-        <p>{{ ticket[1] }}</p>
+        <p><a href="#">{{ ticket[1] }}</a></p>
+        <p style="font-size: 12px;">{{ ticket[3] }} Items, {{ ticket[4] }} TND</p>
+        <p style="font-size: 12px;">{{ ticket[0] }}</p>
     </div>
     {% endfor %}
 </div>

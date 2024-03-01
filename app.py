@@ -39,10 +39,10 @@ def getDefaultCurrency():
     return rows[0][0]
 
 def get_stats():
-    daily = fetchDataWithoutParams("SELECT SUM(current_price) as daily FROM items WHERE SUBSTR(createdAt, 1, 10) = DATE('now');")
-    weekly = fetchDataWithoutParams("SELECT SUM(current_price) as weekly_expense FROM items WHERE strftime('%Y-%m-%W', createdAt) = strftime('%Y-%m-%W', 'now', 'localtime');")
-    monthly = fetchDataWithoutParams("SELECT SUM(current_price) as monthly_expense FROM items WHERE strftime('%Y-%m', createdAt) = strftime('%Y-%m', 'now', 'localtime');")
-    total = fetchDataWithoutParams("SELECT SUM(current_price) as total FROM items;")
+    daily = fetchDataWithoutParams("SELECT COALESCE(SUM(current_price), 0) as daily FROM items WHERE SUBSTR(createdAt, 1, 10) = DATE('now');")
+    weekly = fetchDataWithoutParams("SELECT COALESCE(SUM(current_price), 0) as weekly_expense FROM items WHERE strftime('%Y-%m-%W', createdAt) = strftime('%Y-%m-%W', 'now', 'localtime');")
+    monthly = fetchDataWithoutParams("SELECT COALESCE(SUM(current_price), 0) as monthly_expense FROM items WHERE strftime('%Y-%m', createdAt) = strftime('%Y-%m', 'now', 'localtime');")
+    total = fetchDataWithoutParams("SELECT COALESCE(SUM(current_price), 0) as total FROM items;")
     return [daily[0][0], weekly[0][0], monthly[0][0], total[0][0]]
 
 @app.route("/")

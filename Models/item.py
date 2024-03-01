@@ -41,13 +41,25 @@ class Ticket:
         raise Exception(f"No such Ticket under this code: {self.code}")
     
     def getAllTickets(self):
-        query = "select * from `tickets` where user=?;"
+        cleanTickets = []
+        query = '''
+                SELECT t.id as ticket_id, t.createdAt as date, t.code, COUNT(i.id) as item_count, COALESCE(SUM(i.current_price), 0) as total_price
+                FROM tickets t
+                LEFT JOIN items i ON t.id = i.ticket
+                WHERE t.user = ?  -- Assuming 'user' is a column in the 'tickets' table
+                GROUP BY t.id, t.createdAt, t.code
+                ORDER BY t.id DESC;
+                '''
         data = (self.user,)
         rows = fetchData(query,data)
         if len(rows):
-            return rows
-        return ["There is no data to display!"]
-
+            for row in rows:
+                date_object = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S.%f")
+                formatted_date = date_object.strftime("%Y, %B, %d")
+                cleanTickets.append((formatted_date,row[2],row[0],row[3],row[4]))
+            return cleanTickets
+        return [("There is no data to display!")]
+    
 class Item(Ticket):
     
     def __init__(self,category,subcategory,name,price,quantity,region,currency,user):

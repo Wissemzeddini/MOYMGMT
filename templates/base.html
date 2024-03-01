@@ -41,14 +41,14 @@
                 </li>
 
                 <ul class="menu-links">
-                    <li class="nav-link {% if url_for(request.endpoint) == '/' %}active{% endif %}">
+                    <li class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
                         <a href="/">
                             <i class='bx bx-home-alt icon'></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
 
-                    <li class="nav-link {% if url_for(request.endpoint) == '/tickets' %}active{% endif %}">
+                    <li class="nav-link {% if request.endpoint == 'tickets' or request.endpoint == 'ticket_details' %}active{% endif %}">
                         <a href="/tickets">
                             <i class='bx bx-barcode icon' ></i>
                             <span class="text nav-text">Tickets</span>

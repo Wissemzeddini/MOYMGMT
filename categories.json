@@ -6,15 +6,15 @@
       },
       {
         "name": "Foods",
-        "subcategories": ["Kaskrout", "Coffee", "Juce","Lap-lepi","Melaoui","Gazouz","Other Foods"]
+        "subcategories": ["Kaskrout", "Coffee", "Juce","Lap-lepi","Melaoui","Gazouz","Tea","Kafteji","Pizza","Other Foods"]
       },
       {
         "name":"Telecomication",
-        "subcategories":["Ticket Ooredoo","Ticket Telecom"]
+        "subcategories":["Ticket Ooredoo","Ticket Telecom","Ticket Orange","Forfait Internet"]
       },
       {
         "name":"Transportations",
-        "subcategories":["Bus","Mini-Bus","Taxi","Others"]
+        "subcategories":["Bus","Mini-Bus","Taxi","Train","Others"]
       }
     ]
       
