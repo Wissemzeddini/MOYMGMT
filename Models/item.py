@@ -40,7 +40,7 @@ class Ticket:
             return rows[0][0]
         raise Exception(f"No such Ticket under this code: {self.code}")
     
-    def getAllTickets(self, offset=0, limit=10):
+    def getAllTickets(self, offset=0, limit=12):
         cleanTickets = []
         query = '''
                 SELECT t.id as ticket_id, t.createdAt as date, t.code, COUNT(i.id) as item_count, COALESCE(SUM(i.current_price), 0) as total_price

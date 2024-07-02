@@ -134,7 +134,7 @@ def tickets():
         return redirect(url_for('login'))  # Redirect to login if user is not authenticated
 
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
+    per_page = request.args.get('per_page', 12, type=int)
     offset = (page - 1) * per_page
 
     tk = Ticket(user_id)

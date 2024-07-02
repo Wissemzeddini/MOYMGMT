@@ -37,7 +37,7 @@ class User:
         rows = fetchData(query,(self.username,))
         for row in rows:
             if check_password_hash(row[3],self.__password):
-                print("✅✅ password found under username: ",row[1])
+                #print("✅✅ password found under username: ",row[1])
                 self.updateLastLogin()
                 status = True
         return status

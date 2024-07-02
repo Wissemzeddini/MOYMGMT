@@ -10,6 +10,32 @@
             margin-left: 20px;
             margin-top: 10px;
         }
+        .pagination{
+            text-align: center;
+            padding: 60px;
+        }
+        .pages{
+            font-size: 18px;
+            font-weight: 600;
+            color: #353535;
+        }
+        .btn-pag{
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: var(--primary-color);
+        }
+        .ticket-button{
+            padding: 6px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            color: white!important;
+            margin-bottom: 8px;
+            width: 70%;
+            font-size: 13px;
+        }
     </style>
     <div class="flip-card-container">
         {% for ticket in tickets %}
@@ -22,27 +48,28 @@
                 <div class="flip-card-back">
                     <p class="title">{{ ticket[3] }} Items</p>
                     <p>{{ ticket[0] }}</p>
-                    <a href="#" class="ticket-button">Update</i></a>
-                    <a href="#" class="ticket-button">Delete</a>
+                    <div style="margin-top: 15px;">
+                        <a href="#" class="ticket-button">Update</i></a>
+                        <a href="#" class="ticket-button">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>
         {% endfor %}
        
-
-        <!-- Pagination controls -->
-        <div class="pagination" style="bottom: 100%;color:red">
-            {% if page > 1 %}
-            <a href="{{ url_for('tickets', page=1, per_page=per_page) }}">First</a>
-            <a href="{{ url_for('tickets', page=page-1, per_page=per_page) }}">Previous</a>
-            {% endif %}
-
-            <span>Page {{ page }} of {{ total_pages }}</span>
-
-            {% if page < total_pages %}
-            <a href="{{ url_for('tickets', page=page+1, per_page=per_page) }}">Next</a>
-            <a href="{{ url_for('tickets', page=total_pages, per_page=per_page) }}">Last</a>
+    </div> 
+    <!-- Pagination controls -->
+    <div class="pagination">
+        {% if page > 1 %}
+        <a class="btn-pag" href="{{ url_for('tickets', page=1, per_page=per_page) }}">First</a>
+        <a class="btn-pag" href="{{ url_for('tickets', page=page-1, per_page=per_page) }}">Previous</a>
         {% endif %}
-        </div>
-    </div>       
+
+        <span class="pages">Page {{ page }} of {{ total_pages }}</span>
+
+        {% if page < total_pages %}
+        <a class="btn-pag" href="{{ url_for('tickets', page=page+1, per_page=per_page) }}">Next</a>
+        <a class="btn-pag" href="{{ url_for('tickets', page=total_pages, per_page=per_page) }}">Last</a>
+    {% endif %}
+    </div>      
 {% endblock %}

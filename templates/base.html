@@ -131,7 +131,7 @@
                 </select>
                 <input type="text" name="itemName" id="items_name" placeholder="Item Name" class="pop-fields">
                 <input type="text" name="itemPrice" id="items_price" placeholder="Item Price" class="pop-fields">
-                <input type="text" name="itemQuantity" id="items_quantity" placeholder="Item Quantity" class="pop-fields">
+                <input type="number" name="itemQuantity" id="items_quantity" value="1" class="pop-fields">
                 <select name="itemRegion" id="items_region" class="pop-fields">
                     {% for region_id, region_name, region_code in regions %}
                     <option value="{{ region_id }}">{{ region_name }} - {{ region_code }}</option>
