@@ -7,6 +7,7 @@ import hashlib
 import time
 import json
 from datetime import datetime
+from math import ceil
 
 app = Flask(__name__)
 app.secret_key = 'moymgmt(:Gh/.>.*/{)]'
@@ -128,8 +129,28 @@ def save_expense():
 
 @app.route('/tickets')
 def tickets():
-    tk = Ticket(session.get("userId"))
-    return render_template("tickets.html",session=session,jsonObj=loadJsonFile(),tickets=tk.getAllTickets())
+    user_id = session.get("userId")
+    if not user_id:
+        return redirect(url_for('login'))  # Redirect to login if user is not authenticated
+
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    offset = (page - 1) * per_page
+
+    tk = Ticket(user_id)
+    total_tickets = len(tk.getAllTicketsCount())  # You may need a separate method to count the total tickets
+    tickets = tk.getAllTickets(offset, per_page)
+    total_pages = ceil(total_tickets / per_page)
+
+    return render_template(
+        "tickets.html",
+        session=session,
+        jsonObj=loadJsonFile(),
+        tickets=tickets,
+        page=page,
+        per_page=per_page,
+        total_pages=total_pages
+    )
 
 if __name__=="__main__":
     app.run(debug=True)

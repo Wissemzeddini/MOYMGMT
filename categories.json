@@ -6,7 +6,7 @@
       },
       {
         "name": "Foods",
-        "subcategories": ["Kaskrout", "Coffee", "Juce","Lap-lepi","Melaoui","Gazouz","Tea","Kafteji","Pizza","Other Foods"]
+        "subcategories": ["Kaskrout", "Coffee", "Juce","Lap-lepi","Melaoui","Gazouz","Tea","Kafteji","Pizza","Biscot","Rbo3 Dejaj","Water","Mekhareg","Other Foods"]
       },
       {
         "name":"Telecomication",
@@ -15,6 +15,30 @@
       {
         "name":"Transportations",
         "subcategories":["Bus","Mini-Bus","Taxi","Train","Others"]
+      },
+      {
+        "name":"Foodstuffs",
+        "subcategories":["Harissa","Yaourt","lobyia","Other"]
+      },
+      {
+        "name":"Gifts",
+        "subcategories":["Money","Tickets","Other"]
+      },
+      {
+        "name":"Cleanliness",
+        "subcategories":["Tissue Paper","Other"]
+      },
+      {
+        "name":"clothes",
+        "subcategories":["Hood","Socks"]
+      },
+      {
+        "name":"Meats",
+        "subcategories":["Chicken","Sheep","Others"]
+      },
+      {
+        "name":"None Types",
+        "subcategories":["Hair cut"]
       }
     ]
       
